@@ -10,13 +10,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using ViewModels;
 //using NawazEyeWebProject.Models;
 
 namespace NawazEyeWebProject
 {
-   /* public class EmailService : IIdentityMessageService
+    public class EmailService : IIdentityMessageService
     {
-       /* public Task SendAsync(IdentityMessage message)
+        public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
@@ -105,5 +106,5 @@ namespace NawazEyeWebProject
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
-    }*/
+    }
 }

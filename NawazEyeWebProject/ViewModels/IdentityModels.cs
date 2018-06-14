@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Configuration;
 
 namespace ViewModels
 {
@@ -21,7 +22,7 @@ namespace ViewModels
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base(ConfigurationManager.ConnectionStrings["conString"].ConnectionString, throwIfV1Schema: false)
         {
         }
 
