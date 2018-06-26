@@ -117,7 +117,7 @@ namespace NawazEyeWebProject.Models
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                query = "select * from ACCOUNT_USE_PROMOS where PromoId=" + id + " and BuyerId=" + buyerAccount.Buyer.BuyerId + " and AccountId=" + buyerAccount.AccountId; 
+                query = "select * from ACCOUNT_USE_PROMOS where PromoId=" + id + " and BuyerId=" + buyerAccount.Buyer.BuyerId; 
                 cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
