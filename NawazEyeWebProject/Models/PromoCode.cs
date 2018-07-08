@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -94,15 +95,9 @@ namespace NawazEyeWebProject.Models
                     query = "update PROMO_CODES set Discount=" + value + " where PromoId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -162,6 +157,28 @@ namespace NawazEyeWebProject.Models
                 con.Close();
             }
             catch (SqlException ex)
+            {
+                Exception e = new Exception("Database Connection Error. " + ex.Message);
+                throw e;
+            }
+        }
+        public static List<PromoCode> GetAllPromos()
+        {
+            try
+            {
+                List<PromoCode> list = new List<PromoCode>();
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                string query = "select PromoId from PROMO_CODES";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new PromoCode((int)reader[0]));
+                }
+                return list;
+            }
+            catch(SqlException ex)
             {
                 Exception e = new Exception("Database Connection Error. " + ex.Message);
                 throw e;

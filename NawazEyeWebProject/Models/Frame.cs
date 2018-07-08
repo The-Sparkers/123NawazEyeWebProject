@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -54,15 +55,9 @@ namespace NawazEyeWebProject.Models
                     query = "update FRAMES set FrameName='" + value + "' where FrameId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -116,6 +111,29 @@ namespace NawazEyeWebProject.Models
                 {
                     throw new Exception("Something Went Wrong in deleting.");
                 }
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Database Connection Error. " + ex.Message);
+                throw e;
+            }
+        }
+        public static List<Frame> GetAllFrames()
+        {
+            List<Frame> lstFrame = new List<Frame>();
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                string query = "select FrameId from FRAMES";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lstFrame.Add(new Frame((int)reader[0]));
+                }
+                con.Close();
+                return lstFrame;
             }
             catch (SqlException ex)
             {

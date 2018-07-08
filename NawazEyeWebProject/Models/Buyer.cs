@@ -82,15 +82,10 @@ namespace NawazEyeWebProject.Models
                     query = "Update BUYERS set Name='" + value + "' where BuyerId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -114,15 +109,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update BUYERS set PhoneNumber='" + value + "' where BuyerId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -146,15 +135,10 @@ namespace NawazEyeWebProject.Models
                     query = "Update BUYERS set Email='" + value + "' where BuyerId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -178,15 +162,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update BUYERS set Address='" + value + "' where BuyerId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -210,15 +188,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update BUYERS set CityId=" + value.CityId + " where BuyerId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -230,13 +202,41 @@ namespace NawazEyeWebProject.Models
         }
         public static Account GetAccount(int id)
         {
-            Account acnt= new Account(id);
-            return acnt;
+            try
+            {
+                Account acnt = new Account(id);
+                if (acnt.AccountId == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return acnt;
+                }
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
         public Account GetAccount()
         {
-            Account acnt = new Account(id);
-            return acnt;
+            try
+            {
+                Account acnt = new Account(id);
+                if (acnt.AccountId == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return acnt;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         public Cart GetCurrentCart()
         {
@@ -277,6 +277,29 @@ namespace NawazEyeWebProject.Models
                 while (reader.Read())
                 {
                     l.Add(new Cart((int)reader[0]));
+                }
+                con.Close();
+                return l;
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Database Connection Error. " + ex.Message);
+                throw e;
+            }
+        }
+        public static List<Buyer> GetAllBuyers()
+        {
+            List<Buyer> l = new List<Buyer>();
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                string query = "select BuyerId from BUYERS";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    l.Add(new Buyer((int)reader[0]));
                 }
                 con.Close();
                 return l;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.IO;
 
 namespace NawazEyeWebProject.Models
 {
@@ -22,7 +23,7 @@ namespace NawazEyeWebProject.Models
         {
 
         }
-      protected Product(int id)
+        public Product(int id)
         {
             SetValues(id);
         }
@@ -63,18 +64,12 @@ namespace NawazEyeWebProject.Models
                 try
                 {
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                    query = "Update PRODUCTS set Name='"+value+"' where ProductId="+id.ToString();
+                    query = "Update PRODUCTS set Name='" + value + "' where ProductId=" + id.ToString();
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -98,15 +93,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update PRODUCTS set ProductDescription='" + value + "' where ProductId=" + id.ToString();
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -130,15 +119,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update PRODUCTS set Price=" + value + " where ProductId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -162,15 +145,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update PRODUCTS set Quantity=" + value + " where ProductId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -194,15 +171,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update PRODUCTS set Discount=" + value + " where ProductId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -226,15 +197,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update PRODUCTS set FrameColor='" + value + "' where ProductId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -259,15 +224,9 @@ namespace NawazEyeWebProject.Models
                     query = "Update PRODUCTS set StopOrder=" + i + " where ProductId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -387,7 +346,7 @@ namespace NawazEyeWebProject.Models
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                query = "INSERT INTO [PRODUCT_IMAGES] ([ProductId],[Image],[PrimaryFlag]) VALUES ("+id+","+image+",0)";
+                query = "INSERT INTO [PRODUCT_IMAGES] ([ProductId],[Image],[PrimaryFlag]) VALUES (" + id + ",'" + image + "',0)";
                 cmd = new SqlCommand(query, con);
                 con.Open();
                 if (cmd.ExecuteNonQuery() != 1)
@@ -415,15 +374,9 @@ namespace NawazEyeWebProject.Models
                 query = "update PRODUCT_IMAGES set PrimaryFlag=1 where Image='" + image + "' and ProductId=" + id + "; update PRODUCT_IMAGES set PrimaryFlag = 0 where ProductId = " + id + " and Image!='" + image + "'; ";
                 cmd = new SqlCommand(query, con);
                 con.Open();
-                if (cmd.ExecuteNonQuery() != 1)
-                {
-                    Exception e = new Exception("Database Proccessing Error.");
-                    throw e;
-                }
-                else
-                {
-                    SetValues(id);
-                }
+                cmd.ExecuteNonQuery();
+                SetValues(id);
+
                 con.Close();
             }
             catch (SqlException ex)
@@ -446,15 +399,9 @@ namespace NawazEyeWebProject.Models
                     query = "update PRODUCTS set ItemsSold=" + value + " where ProductId=" + id;
                     cmd = new SqlCommand(query, con);
                     con.Open();
-                    if (cmd.ExecuteNonQuery() != 1)
-                    {
-                        Exception e = new Exception("Database Proccessing Error.");
-                        throw e;
-                    }
-                    else
-                    {
-                        SetValues(id);
-                    }
+                    cmd.ExecuteNonQuery();
+                    SetValues(id);
+
                     con.Close();
                 }
                 catch (SqlException ex)
@@ -489,24 +436,44 @@ namespace NawazEyeWebProject.Models
         }
         public static bool IsSunglasses(int productId)
         {
-            Sunglasses s = new Sunglasses(productId);
-            if (s.name != null)
+            try
             {
-                return true;
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                string query = "select * from SUNGLASSES where ProductId=" + productId; 
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    con.Close();
+                    return true;
+                }
+                con.Close();
+                return false;
             }
-            else
+            catch
             {
                 return false;
             }
         }
         public static bool IsPrescriptionGlasses(int productId)
         {
-            PrescriptionGlasses p = new PrescriptionGlasses(productId);
-            if (p.name != null)
+            try
             {
-                return true;
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                string query = "select * from PRESCRIPTION_GLASSES where ProductId=" + productId;
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    con.Close();
+                    return true;
+                }
+                con.Close();
+                return false;
             }
-            else
+            catch
             {
                 return false;
             }
@@ -528,6 +495,10 @@ namespace NawazEyeWebProject.Models
         }
         public bool Delete()
         {
+            foreach (string image in Images)
+            {
+                DeleteImage(image);
+            }
             try
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
@@ -554,6 +525,19 @@ namespace NawazEyeWebProject.Models
                 Exception e = new Exception("Database Connection Error. " + ex.Message);
                 throw e;
             }
+        }
+        private void DeleteImage(string fileName)
+        {
+            /*Some Code to Delete From FTP Server
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * */
+            File.Delete(@"D:\New folder\VS Projects\NawazEyeWebProject\123NawazEyeWebProject\NawazEyeWebProject\images\Uploads\" + fileName);
         }
     }
 }
